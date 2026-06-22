@@ -94,11 +94,15 @@ Kept as default.
 
 ## Notes
 
-Memory Integrity remained enabled in Windows.
+### Windows Security Configuration
 
-VMware runs using Windows Hypervisor Platform.
+During VMware installation, Virtualization-based Security (VBS) was detected.
 
-This configuration is compatible with Windows 11 security features.
+Memory Integrity was temporarily disabled to avoid potential compatibility issues during the initial lab setup.
+
+VMware Workstation Pro was installed using the Windows Hypervisor Platform (WHP) compatibility mode.
+
+This configuration will be reviewed again after the lab environment is fully deployed.
 
 ---
 
