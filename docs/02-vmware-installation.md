@@ -1,127 +1,200 @@
 # VMware Workstation Pro Installation
 
-## Project
+## 🎯 Objective
 
-Enterprise SOC Home Lab
+Prepare a professional virtualization environment for building an **Enterprise SOC Home Lab**.
 
----
-
-## Objective
-
-Prepare the virtualization environment for building a mini enterprise SOC lab.
+This document records the installation and initial configuration of **VMware Workstation Pro 17.6.4**, which will host all virtual machines used throughout this project.
 
 ---
 
-## Host Machine
+## Step 1 – Hyper-V Compatibility Check
 
-| Item | Specification |
-|------|---------------|
-| OS | Windows 11 Pro |
-| CPU | AMD Ryzen 7 7730U |
-| RAM | 32 GB |
-| Storage | 500 GB SSD |
-| VMware | VMware Workstation Pro 17 |
+Before installing VMware Workstation Pro, Windows 11 detected **Virtualization-Based Security (VBS)** and **Windows Hypervisor Platform (WHP)**.
 
----
+To ensure VMware could run properly, the virtualization environment was reviewed and Windows security settings were verified.
 
-## VMware Installation
+Memory Integrity was temporarily disabled during compatibility testing.
 
-### Download
+> [!NOTE]
+> Modern versions of VMware Workstation can coexist with Windows Hypervisor Platform (WHP), but understanding VBS compatibility is important when building enterprise labs.
 
-Downloaded VMware Workstation Pro 17.
+### Screenshot
 
----
+![Hyper-V Compatibility](../screenshots/vmware/01-hyper-v-warning.png)
 
-### Installation Notes
-
-Because Windows 11 uses Virtualization Based Security (VBS), VMware detected Hyper-V support.
-
-Selected:
-
-- Install Windows Hypervisor Platform automatically
-
-VMware installed successfully.
+**Figure 1.** Windows detected Hyper-V/WHP during VMware installation.
 
 ---
 
-## VMware Preferences
+## Step 2 – VMware Installation Completed
 
-### Default VM Folder
+VMware Workstation Pro **17.6.4** was installed successfully.
 
+### Verification
+
+* [x] VMware starts successfully
+* [x] No installation errors
+* [x] VMware Library is accessible
+
+### Screenshot
+
+![Installation Complete](../screenshots/vmware/02-install-complete.png)
+
+**Figure 2.** VMware Workstation Pro installation completed successfully.
+
+---
+
+## Step 3 – Configure VMware Preferences
+
+The default virtual machine storage location was changed.
+
+### Default Location
+
+```text
+Documents\Virtual Machines
 ```
 
+### New Location
+
+```text
 C:\CyberLab\VMware
-
 ```
 
-### ISO Folder
+> [!TIP]
+> Keeping every virtual machine inside a dedicated project directory makes backup, migration, and documentation much easier.
 
-```
+### Screenshot
 
-C:\CyberLab\ISO
+![VMware Preferences](../screenshots/vmware/03-preferences.png)
 
-```
+**Figure 3.** VMware Preferences configured to use the CyberLab directory.
 
 ---
 
-## Virtual Networks
+## Step 4 – Review Global Memory Settings
 
-Configured using Virtual Network Editor.
+The VMware global memory configuration was reviewed before creating any virtual machines.
 
-### VMnet8
+### Host Specification
 
-Purpose:
+| Component | Specification     |
+| --------- | ----------------- |
+| CPU       | AMD Ryzen 7 7730U |
+| Memory    | 32 GB RAM         |
+| Storage   | 500 GB SSD        |
 
-NAT
+This hardware provides sufficient resources for running multiple virtual machines simultaneously.
 
-Used for Internet access.
+### Screenshot
 
-### VMnet1
+![Memory Settings](../screenshots/vmware/04-memory-settings.png)
 
-Purpose:
-
-Host-only
-
-Used for the internal enterprise LAN.
-
-### VMnet0
-
-Bridge
-
-Kept as default.
+**Figure 4.** VMware global memory configuration.
 
 ---
 
-## Notes
+## Step 5 – Configure Virtual Networks
 
-### Windows Security Configuration
+The VMware Virtual Network Editor was reviewed before creating the firewall.
 
-During VMware installation, Virtualization-based Security (VBS) was detected.
+### Network Design
 
-Memory Integrity was temporarily disabled to avoid potential compatibility issues during the initial lab setup.
+| Network  | Purpose         |
+| -------- | --------------- |
+| `VMnet0` | Bridged         |
+| `VMnet1` | Host-only (LAN) |
+| `VMnet8` | NAT (WAN)       |
 
-VMware Workstation Pro was installed using the Windows Hypervisor Platform (WHP) compatibility mode.
+> [!IMPORTANT]
+> Separating WAN and LAN traffic is a fundamental requirement for building an enterprise firewall.
 
-This configuration will be reviewed again after the lab environment is fully deployed.
+### Screenshot
+
+![Virtual Network Editor](../screenshots/vmware/05-network-editor.png)
+
+**Figure 5.** VMware Virtual Network Editor showing VMnet0, VMnet1, and VMnet8.
 
 ---
 
-## Screenshots
+## Step 6 – Create the First Enterprise Virtual Machine
 
-Screenshots are stored in:
+The first virtual machine was created.
 
+### Virtual Machine Name
+
+```text
+SOC-pfSense-01
 ```
 
-screenshots/
+### Hardware Configuration
 
-```
+| Item         | Configuration  |
+| ------------ | -------------- |
+| CPU          | 2 Cores        |
+| Memory       | 2 GB           |
+| Disk         | 20 GB          |
+| Provisioning | Thin Provision |
+| Disk Type    | Single VMDK    |
+
+### Screenshot
+
+![Create pfSense VM](../screenshots/vmware/06-create-pfsense-vm.png)
+
+**Figure 6.** Initial configuration of the pfSense virtual machine.
 
 ---
 
-## Status
+## Step 7 – Configure Dual Network Adapters
 
-Completed
+Two virtual network adapters were configured.
 
-Next Step:
+| Adapter   | Network              | Purpose |
+| --------- | -------------------- | ------- |
+| Adapter 1 | `VMnet8 (NAT)`       | WAN     |
+| Adapter 2 | `VMnet1 (Host-only)` | LAN     |
 
-Create pfSense Firewall virtual machine.
+> [!IMPORTANT]
+> Every enterprise firewall should have at least two network interfaces to separate external and internal traffic.
+
+### Screenshot
+
+![Dual Network Adapter](../screenshots/vmware/07-dual-network-adapter.png)
+
+**Figure 7.** The pfSense virtual machine configured with separate WAN and LAN interfaces.
+
+---
+
+## Step 8 – First Boot Verification
+
+The virtual machine powered on successfully.
+
+The pfSense installer booted correctly from the ISO image.
+
+### Verification
+
+* [x] Virtual machine boots successfully
+* [x] ISO mounted correctly
+* [x] pfSense installer starts normally
+
+### Screenshot
+
+![First Boot](../screenshots/vmware/08-first-boot.png)
+
+**Figure 8.** First successful boot of the pfSense virtual machine.
+
+
+---
+
+## Lessons Learned
+
+* VMware should be configured before deploying guest operating systems.
+* Enterprise virtual machines should follow a consistent naming convention.
+* Network planning should be completed before installing operating systems.
+* A dual-network firewall architecture provides a realistic enterprise environment.
+
+---
+
+## Next Step
+
+Install **pfSense Community Edition** and configure the WAN/LAN interfaces for the Enterprise SOC Home Lab.
