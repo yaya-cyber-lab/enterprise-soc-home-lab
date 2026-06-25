@@ -74,7 +74,6 @@ This configuration satisfies Microsoft's Windows 11 hardware requirements.
 ### Screenshot
 
 ![Firmware Configuration](../screenshots/windows11/01-firmware-settings.png)
-
 **Figure 1.** Windows 11 firmware configuration.
 
 ---
@@ -94,7 +93,6 @@ The virtual machine was configured with the following hardware.
 ### Screenshot
 
 ![Hardware Configuration](../screenshots/windows11/02-hardware-configuration.png)
-
 **Figure 2.** Virtual hardware configuration.
 
 ---
