@@ -71,7 +71,6 @@ The virtual machine was configured using:
 
 This configuration satisfies Microsoft's Windows 11 hardware requirements.
 
-### Screenshot
 
 ![Firmware Configuration](../screenshots/windows11/01-firmware-settings.png)
 **Figure 1.** Windows 11 firmware configuration.
@@ -90,7 +89,7 @@ The virtual machine was configured with the following hardware.
 | Disk Type    | NVMe               |
 | Network      | VMnet1 (Host-only) |
 
-### Screenshot
+
 
 ![Hardware Configuration](../screenshots/windows11/02-hardware-configuration.png)
 **Figure 2.** Virtual hardware configuration.
@@ -113,10 +112,9 @@ Purpose:
 * Protected by pfSense firewall
 * Receives DHCP from pfSense
 
-### Screenshot
+
 
 ![Network Adapter](../screenshots/windows11/03-network-adapter.png)
-
 **Figure 3.** Windows endpoint connected to VMnet1.
 
 ---
@@ -131,10 +129,8 @@ The following installation options were selected.
 * Custom Installation
 * 80 GB Virtual Disk
 
-### Screenshot
 
 ![Windows Setup](../screenshots/windows11/04-windows-setup.png)
-
 **Figure 4.** Windows Setup.
 
 ---
@@ -159,10 +155,9 @@ The installation completed successfully.
 
 The Windows endpoint booted normally into the desktop.
 
-### Screenshot
+
 
 ![Windows Desktop](../screenshots/windows11/05-windows-desktop.png)
-
 **Figure 5.** Windows 11 desktop after installation.
 
 ---
@@ -217,6 +212,5 @@ Planned tasks:
 * Firewall Segmentation
 * Technical Documentation
 
-```
-```
+
 
