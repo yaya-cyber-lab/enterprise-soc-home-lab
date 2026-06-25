@@ -176,7 +176,7 @@ The LAN interface was configured with a static IP address.
 
 ### Screenshot
 
-![LAN Configuration](../screenshots/PfSense/07-lan-network-configuration.png)
+![LAN Configuration](../screenshots/PfSense/07-Lan-network-configuration.png)
 
 **Figure 7.** LAN network configuration.
 
@@ -222,7 +222,7 @@ The following items were verified successfully:
 
 ### Screenshot
 
-![pfSense Console](../screenshots/PfSense/08-Final-pfsense-console-menu.png)
+![pfSense Console](../screenshots/PfSense/08-Final-pfSense-console-menu.png)
 
 **Figure 8.** Final pfSense console menu after successful deployment.
 
