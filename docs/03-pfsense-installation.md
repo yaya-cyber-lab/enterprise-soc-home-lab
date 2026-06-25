@@ -90,7 +90,7 @@ No pfSense Plus subscription was required.
 
 ### Screenshot
 
-![Install CE](../screenshots/pfsense/02-selection-of-pfSense-community-Edition.png)
+![Install CE](../screenshots/PfSense/02-selection-of-pfSense-community-Edition.png)
 
 **Figure 2.** Selection of pfSense Community Edition.
 
@@ -109,7 +109,7 @@ Since the lab uses a single virtual disk, redundancy was not required.
 
 ### Screenshot
 
-![ZFS Configuration](../screenshots/pfsense/03-zfs-storate-configuration.png)
+![ZFS Configuration](../screenshots/PfSense/03-zfs-storate-configuration.png)
 
 **Figure 3.** ZFS storage configuration using a single-disk stripe layout.
 
@@ -125,7 +125,7 @@ pfSense CE 2.8.1
 
 ### Screenshot
 
-![Version Selection](../screenshots/pfsense/04-selection-of-the-current-stable-release.png)
+![Version Selection](../screenshots/PfSense/04-selection-of-the-current-stable-release.png)
 
 **Figure 4.** Selection of the current stable release.
 
@@ -137,7 +137,7 @@ The installation process successfully completed and the system rebooted from the
 
 ### Screenshot
 
-![Installation Complete](../screenshots/pfsense/05-pfsense-install-finish.png)
+![Installation Complete](../screenshots/PfSense/05-pfsense-install-finish.png)
 
 **Figure 5.** Successful installation of pfSense CE 2.8.1.
 
@@ -156,7 +156,7 @@ The firewall interfaces were manually assigned.
 
 ### Screenshot
 
-![Interface Assignment](../screenshots/pfsense/06-wan-and-lan-interface-assignment.png)
+![Interface Assignment](../screenshots/PfSense/06-wan-and-lan-interface-assignment.png)
 
 **Figure 6.** WAN and LAN interface assignment.
 
@@ -176,7 +176,7 @@ The LAN interface was configured with a static IP address.
 
 ### Screenshot
 
-![LAN Configuration](../screenshots/pfsense/07-lan-network-configuration.png)
+![LAN Configuration](../screenshots/PfSense/07-lan-network-configuration.png)
 
 **Figure 7.** LAN network configuration.
 
