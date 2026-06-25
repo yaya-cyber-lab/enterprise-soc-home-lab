@@ -222,7 +222,7 @@ The following items were verified successfully:
 
 ### Screenshot
 
-![pfSense Console](../screenshots/pfsense/08-Final-pfsense-console-menu.png)
+![pfSense Console](../screenshots/PfSense/08-Final-pfsense-console-menu.png)
 
 **Figure 8.** Final pfSense console menu after successful deployment.
 
