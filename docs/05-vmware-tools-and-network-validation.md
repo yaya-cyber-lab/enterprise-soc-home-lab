@@ -95,7 +95,7 @@ Expected result:
 VMware Tools service is running
 ```
 
-![VMware Tools Service Running](../screenshots/windows11/05-vmware-tools-service-running.png)
+![VMware Tools Service Running](../screenshots/windows11/05-vmware-tools-service-runningI.png)
 
 **Figure 4: VMware Tools service running on SOC-Windows11-01.**
 
