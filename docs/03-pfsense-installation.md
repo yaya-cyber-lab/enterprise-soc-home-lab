@@ -109,7 +109,7 @@ Since the lab uses a single virtual disk, redundancy was not required.
 
 ### Screenshot
 
-![ZFS Configuration](../screenshots/PfSense/03-zfs-storate-configuration.png)
+![ZFS Configuration](../screenshots/PfSense/03-ZFS-storage-configuration.png)
 
 **Figure 3.** ZFS storage configuration using a single-disk stripe layout.
 
