@@ -4,7 +4,7 @@
 
 Deploy an Ubuntu Server virtual machine as a Linux endpoint in the Enterprise SOC Home Lab.
 
-This Ubuntu Server will be used for future SOC lab components, including:
+This Ubuntu Server will support future SOC lab components, including:
 
 * Linux endpoint logging
 * SSH administration
@@ -25,7 +25,6 @@ This Ubuntu Server will be used for future SOC lab components, including:
 | Username             | socadmin                   |
 | Platform             | VMware Workstation Pro     |
 | CPU                  | 2 virtual cores            |
-| Memory               | 2 GB / 4 GB                |
 | Disk                 | 40 GB                      |
 | Network              | VMnet1 / SOC LAN           |
 | IP Address           | 192.168.10.102             |
@@ -53,7 +52,7 @@ pfSense Firewall
             |-- Ubuntu Server: 192.168.10.102
 ```
 
-This design allows the Ubuntu Server to operate as an internal Linux endpoint while all outbound traffic passes through pfSense.
+This design allows the Ubuntu Server to operate as an internal Linux endpoint while outbound traffic passes through pfSense.
 
 ---
 
@@ -65,7 +64,7 @@ Ubuntu Server 24.04.4 LTS ISO was downloaded and saved to the local ISO director
 C:\CyberLab\ISO
 ```
 
-ISO file name:
+The ISO file was renamed for easier lab management.
 
 ```text
 ubuntu-server-24.04.iso
@@ -77,64 +76,35 @@ ubuntu-server-24.04.iso
 
 ---
 
-## Step 2: Create Ubuntu Server Virtual Machine
-
-A new virtual machine was created in VMware Workstation.
-
-Virtual machine name:
-
-```text
-SOC-Ubuntu-Server-01
-```
-
-Virtual machine path:
-
-```text
-C:\CyberLab\VMware\SOC-Ubuntu-Server-01
-```
-
-The VM was configured with:
-
-* 2 virtual CPU cores
-* 40 GB virtual disk
-* VMnet1 internal SOC LAN network
-* Ubuntu Server 24.04 LTS ISO attached
-
-![Ubuntu VM Created](../screenshots/ubuntu/20-phase7-ubuntu-vm-created.png)
-
-**Figure 20: Ubuntu Server VM created in VMware Workstation**
-
----
-
-## Step 3: Configure Virtual Disk
+## Step 2: Configure Virtual Disk Capacity
 
 The Ubuntu Server virtual disk was configured with a 40 GB maximum capacity.
 
-The disk was stored as multiple files to make the VM easier to move, copy, and back up during the lab build.
+The virtual disk was stored as multiple files to make the VM easier to move, copy, and back up during the lab build.
 
-![Ubuntu Disk Capacity](../screenshots/ubuntu/21-phase7-ubuntu-disk-capacity.png)
+![Ubuntu Disk Capacity](../screenshots/ubuntu/20-phase7-ubuntu-disk-capacity.png)
 
-**Figure 21: Ubuntu Server virtual disk configured**
+**Figure 20: Ubuntu Server virtual disk capacity configured**
 
 ---
 
-## Step 4: Configure Network Adapter
+## Step 3: Configure Network Adapter
 
-The Ubuntu Server VM network adapter was connected to the SOC internal network.
+The Ubuntu Server VM network adapter was connected to the internal SOC LAN.
 
 ```text
 Network Adapter: Custom VMnet1
 ```
 
-This allows Ubuntu Server to communicate with pfSense LAN and other internal SOC endpoints.
+This allows the Ubuntu Server to communicate with pfSense LAN and other internal SOC endpoints.
 
-![Ubuntu Network Adapter](../screenshots/ubuntu/22-phase7-ubuntu-network-adapter-vmnet1.png)
+![Ubuntu Network Adapter](../screenshots/ubuntu/21-phase7-ubuntu-network-adapter-vmnet1.png)
 
-**Figure 22: Ubuntu Server network adapter connected to VMnet1**
+**Figure 21: Ubuntu Server network adapter connected to VMnet1**
 
 ---
 
-## Step 5: Install Ubuntu Server
+## Step 4: Start Ubuntu Server Installation
 
 Ubuntu Server installation was started from the ISO.
 
@@ -146,39 +116,60 @@ Keyboard: English (US)
 Installation Type: Ubuntu Server
 ```
 
-The server profile was configured as:
+![Ubuntu Installation Started](../screenshots/ubuntu/22-phase7-ubuntu-installation-start.png)
+
+**Figure 22: Ubuntu Server installation started**
+
+---
+
+## Step 5: Configure User Profile
+
+The Ubuntu Server user profile was configured during installation.
 
 ```text
 Hostname: soc-ubuntu-server-01
 Username: socadmin
 ```
 
-OpenSSH Server was enabled during installation to support remote administration.
+![Ubuntu User Profile](../screenshots/ubuntu/23-phase7-ubuntu-user-profile.png)
 
-![Ubuntu Installation Started](../screenshots/ubuntu/23-phase7-ubuntu-installation-start.png)
-
-**Figure 23: Ubuntu Server installation started**
-
-![Ubuntu User Profile](../screenshots/ubuntu/24-phase7-ubuntu-user-profile.png)
-
-**Figure 24: Ubuntu Server user profile configured**
-
-![Ubuntu SSH Enabled](../screenshots/ubuntu/25-phase7-ubuntu-ssh-enabled.png)
-
-**Figure 25: OpenSSH Server enabled during installation**
+**Figure 23: Ubuntu Server user profile configured**
 
 ---
 
-## Step 6: First Login Validation
+## Step 6: Enable OpenSSH Server
 
-After installation, the VM was rebooted and the first login was completed successfully.
+OpenSSH Server was enabled during installation to support remote administration.
 
-The following commands were used for validation:
+This allows the Ubuntu Server to be managed remotely from other internal SOC lab machines.
+
+![Ubuntu SSH Enabled](../screenshots/ubuntu/24-phase7-ubuntu-ssh-enabled.png)
+
+**Figure 24: OpenSSH Server enabled during Ubuntu installation**
+
+---
+
+## Step 7: Complete Installation
+
+After the installation completed, the Ubuntu Server VM was rebooted.
+
+The installation media was disconnected after reboot so the VM could boot from the installed virtual disk.
+
+![Ubuntu Install Complete](../screenshots/ubuntu/25-phase7-ubuntu-install-complete.png)
+
+**Figure 25: Ubuntu Server installation completed**
+
+---
+
+## Step 8: First Login Validation
+
+After reboot, the first login was completed successfully.
+
+The following commands were used for initial validation:
 
 ```bash
 hostname
 whoami
-ip a
 lsb_release -a
 ```
 
@@ -196,40 +187,19 @@ OS: Ubuntu 24.04.4 LTS
 
 ---
 
-## Step 7: Network Troubleshooting and IP Address Validation
+## Step 9: IP Address Validation
 
-Initially, the Ubuntu Server network interface was detected but did not receive an IPv4 address.
-
-The interface was identified as:
-
-```text
-ens33
-```
-
-A netplan DHCP configuration was created for the interface:
-
-```yaml
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    ens33:
-      dhcp4: true
-```
-
-The configuration was applied with:
+The Ubuntu Server network interface was validated using:
 
 ```bash
-sudo chmod 600 /etc/netplan/01-ens33-dhcp.yaml
-sudo netplan generate
-sudo netplan apply
+ip a
 ```
 
-After correction, the Ubuntu Server successfully received an IP address from the SOC LAN DHCP service.
+The Ubuntu Server successfully received an IP address from the SOC LAN DHCP service.
 
 ```text
-IP Address: 192.168.10.102/24
 Interface: ens33
+IP Address: 192.168.10.102/24
 Gateway: 192.168.10.1
 ```
 
@@ -239,7 +209,7 @@ Gateway: 192.168.10.1
 
 ---
 
-## Step 8: Network Connectivity Test
+## Step 10: Network Connectivity Test
 
 Internal and external network connectivity were tested.
 
@@ -265,7 +235,7 @@ Validation results:
 
 ---
 
-## Step 9: System Update
+## Step 11: System Update
 
 The Ubuntu Server package index was updated and available upgrades were installed.
 
@@ -274,7 +244,7 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-Basic administration and troubleshooting tools were installed:
+Basic administration and troubleshooting tools were installed.
 
 ```bash
 sudo apt install -y net-tools curl wget vim git unzip htop tree openssh-server
@@ -286,9 +256,9 @@ sudo apt install -y net-tools curl wget vim git unzip htop tree openssh-server
 
 ---
 
-## Step 10: SSH Service Validation
+## Step 12: SSH Service Validation
 
-The SSH service was checked after installation.
+The SSH service was checked after installation and update.
 
 ```bash
 sudo systemctl status ssh
@@ -306,9 +276,11 @@ SSH Status: active running
 
 ---
 
-## Final Validation
+## Step 13: Final Validation
 
-The Ubuntu Server deployment was completed successfully.
+Final validation confirmed that the Ubuntu Server was installed, connected to the SOC LAN, updated, and ready for future SOC lab phases.
+
+Validation checklist:
 
 | Validation Item           | Status    |
 | ------------------------- | --------- |
@@ -321,6 +293,10 @@ The Ubuntu Server deployment was completed successfully.
 | System updated            | Completed |
 | Basic tools installed     | Completed |
 | SSH enabled and active    | Completed |
+
+![Ubuntu Final Validation](../screenshots/ubuntu/31-phase7-ubuntu-final-validation.png)
+
+**Figure 31: Ubuntu Server final validation completed**
 
 ---
 
@@ -336,3 +312,14 @@ The VM is ready for future phases, including:
 * Elastic Stack integration
 * Detection engineering
 * Attack simulation and event collection
+
+---
+
+## README Status Update
+
+The project README status table should be updated as follows:
+
+```markdown
+| Ubuntu Server Deployment | ✅ Completed |
+| Kali Linux Deployment | ⏳ Planned |
+```
