@@ -315,11 +315,3 @@ The VM is ready for future phases, including:
 
 ---
 
-## README Status Update
-
-The project README status table should be updated as follows:
-
-```markdown
-| Ubuntu Server Deployment | ✅ Completed |
-| Kali Linux Deployment | ⏳ Planned |
-```
