@@ -415,14 +415,4 @@ The VM is ready for future phases, including:
 
 ---
 
-## README Status Update
 
-The project README status table should be updated as follows:
-
-```markdown
-| Kali Linux Deployment | ✅ Completed |
-| Wazuh SIEM | ⏳ Planned |
-| Elastic Stack | ⏳ Planned |
-| Sysmon Deployment | ⏳ Planned |
-| Detection Engineering | ⏳ Planned |
-```
