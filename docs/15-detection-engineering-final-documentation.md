@@ -32,6 +32,7 @@ The objectives of this phase were:
 - Validate alerts from both Ubuntu CLI and Wazuh Dashboard
 - Troubleshoot rule matching issues
 - Confirm all custom rules trigger successfully
+- Organize validation commands into reusable scripts
 
 ---
 
@@ -154,7 +155,7 @@ The final custom rules used child-rule logic with `<if_sid>` because several eve
 ## Custom Rule Mapping
 
 | Custom Rule ID | Parent Rule ID | Detection | Log Source | MITRE ATT&CK |
-|---|---:|---|---|---|
+|---:|---:|---|---|---|
 | 100200 | 92057 | Encoded PowerShell command | Sysmon Event ID 1 | T1059.001 |
 | 100201 | 92036 | Local user enumeration using `net user` | Sysmon Event ID 1 | T1087.001 |
 | 100202 | 92036 | Local administrators group enumeration | Sysmon Event ID 1 | T1069.001 |
@@ -206,6 +207,8 @@ These scripts are for controlled lab testing and detection validation only.
 ## Rule Validation Commands
 
 The following commands show the manual validation process. Equivalent reusable scripts are stored in [`scripts/phase15-detection-engineering/`](../scripts/phase15-detection-engineering/).
+
+---
 
 ### Rule 100200 - Encoded PowerShell
 
@@ -493,6 +496,8 @@ Last 24 hours
 ## Screenshots
 
 The following screenshots were captured to validate the Phase 15 custom detection rules in Wazuh Dashboard.
+
+---
 
 ### Rule 100200 - Encoded PowerShell Detection
 
