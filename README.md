@@ -2,7 +2,7 @@
 
 A hands-on Enterprise Security Operations Center (SOC) Home Lab built with VMware Workstation Pro.
 
-This project simulates a small enterprise security environment with segmented networking, a perimeter firewall, Windows endpoint telemetry, centralized log collection, Wazuh SIEM monitoring, attack simulation, and custom detection engineering.
+This project simulates a small enterprise security environment with segmented networking, a pfSense perimeter firewall, Windows endpoint telemetry, centralized log collection, Wazuh SIEM monitoring, attack simulation, and custom detection engineering.
 
 The purpose of this lab is to build practical SOC analyst and detection engineering skills through real deployment, troubleshooting, validation, and documentation.
 
@@ -24,6 +24,7 @@ The lab now includes:
 - Custom Wazuh detection rules
 - MITRE ATT&CK mapping
 - Dashboard and CLI alert validation
+- Reusable detection validation scripts
 - Final Phase 15 detection engineering documentation
 
 ---
@@ -51,7 +52,7 @@ The lab now includes:
 | Firewall | SOC-pfSense-01 | Perimeter firewall and network gateway |
 | Wazuh Server | SOC-Ubuntu-Server-01 | Wazuh Manager, Indexer, and Dashboard |
 | Windows Endpoint | SOC-Windows11-01 | Monitored Windows workstation |
-| Kali Linux | SOC-Kali-01 | Security testing / future attacker workstation |
+| Kali Linux | SOC-Kali-01 | Security testing and future attacker workstation |
 | Host Machine | AI_AGENT001 | VMware Workstation Pro host |
 
 ---
@@ -70,17 +71,18 @@ The lab now includes:
 
 ---
 
-## Scripts
+## Lab Network Diagram
 
-Reusable detection validation scripts are stored in the `scripts/` folder.
+![Enterprise SOC Home Lab Network Diagram](diagrams/enterprise-soc-home-lab-network-diagram.png)
 
-[View Scripts](scripts/)
+---
 
-Phase 15 detection engineering scripts:
+## Wazuh Log Flow
 
-[Phase 15 Detection Engineering Scripts](scripts/phase15-detection-engineering/)
+![Wazuh Log Flow Diagram](diagrams/wazuh-log-flow-diagram.png)
 
-These scripts are used to trigger and validate custom Wazuh detection rules for encoded PowerShell, account discovery, local group enumeration, scheduled task activity, and failed logon events.
+---
+
 ## Repository Structure
 
 ```text
@@ -102,20 +104,33 @@ enterprise-soc-home-lab/
 │   ├── 13-sysmon-deployment.md
 │   ├── 14-attack-simulation-detection-validation.md
 │   └── 15-detection-engineering-final-documentation.md
+├── diagrams/
+│   ├── README.md
+│   ├── enterprise-soc-home-lab-network-diagram.png
+│   ├── enterprise-soc-home-lab-network-diagram.drawio
+│   ├── wazuh-log-flow-diagram.png
+│   └── wazuh-log-flow-diagram.drawio
 ├── screenshots/
 │   ├── vmware/
-│   ├── 15-detection-engineering-final-documentation/
-│   │   ├── 30-phase15-rule100200-detected.png
-│   │   ├── 31-phase15-rule100201-detected.png
-│   │   ├── 32-phase15-rule100202-detected.png
-│   │   ├── 33-phase15-rule100203-detected.png
-│   │   └── 34-phase15-rule100204-detected.png
-│   └── ...
-├── diagrams/
+│   └── 15-detection-engineering-final-documentation/
+│       ├── 30-phase15-rule100200-detected.png
+│       ├── 31-phase15-rule100201-detected.png
+│       ├── 32-phase15-rule100202-detected.png
+│       ├── 33-phase15-rule100203-detected.png
+│       └── 34-phase15-rule100204-detected.png
 └── scripts/
+    ├── README.md
+    └── phase15-detection-engineering/
+        ├── README.md
+        ├── trigger-encoded-powershell.ps1
+        ├── trigger-net-user.ps1
+        ├── trigger-net-localgroup-admins.ps1
+        ├── trigger-schtasks.ps1
+        ├── trigger-failed-logon.ps1
+        └── wazuh-alert-validation-queries.sh
 ```
 
-> Note: Some file names may be adjusted as the project evolves. The documentation is organized by phase.
+> Note: Some early phase file names may be adjusted as the project evolves. The documentation is organized by phase.
 
 ---
 
@@ -141,6 +156,53 @@ enterprise-soc-home-lab/
 
 ---
 
+## Documentation
+
+| Document | Description |
+|---|---|
+| [01 - Host Preparation](docs/01-host-preparation.md) | Prepare the Windows host for virtualization |
+| [02 - VMware Installation](docs/02-vmware-installation.md) | Install VMware Workstation Pro and configure virtual networking |
+| [03 - pfSense Installation](docs/03-pfsense-installation.md) | Deploy pfSense CE firewall |
+| [09 - Lab Network Stabilization](docs/09-lab-network-stabilization.md) | Stabilize and validate lab network connectivity |
+| [11 - Wazuh Server Installation](docs/11-wazuh-server-installation.md) | Install Wazuh Server components |
+| [12 - Wazuh Agent Installation](docs/12-wazuh-agent-installation.md) | Register and validate Windows Wazuh Agent |
+| [13 - Sysmon Deployment](docs/13-sysmon-deployment.md) | Deploy Sysmon on Windows endpoint |
+| [14 - Attack Simulation and Detection Validation](docs/14-attack-simulation-detection-validation.md) | Simulate attacks and validate Wazuh alerts |
+| [15 - Detection Engineering and Final Documentation](docs/15-detection-engineering-final-documentation.md) | Create and validate custom Wazuh detection rules |
+
+---
+
+## Diagrams
+
+Architecture and data flow diagrams are stored in the `diagrams/` folder.
+
+| Diagram | Description |
+|---|---|
+| [Enterprise SOC Home Lab Network Diagram](diagrams/enterprise-soc-home-lab-network-diagram.png) | Overall SOC lab network topology |
+| [Wazuh Log Flow Diagram](diagrams/wazuh-log-flow-diagram.png) | Windows telemetry forwarding and Wazuh detection flow |
+| [Diagrams README](diagrams/README.md) | Explanation of diagram files and usage |
+
+---
+
+## Scripts
+
+Reusable detection validation scripts are stored in the `scripts/` folder.
+
+| Script Location | Description |
+|---|---|
+| [scripts/README.md](scripts/README.md) | Overview of all lab scripts |
+| [scripts/phase15-detection-engineering/](scripts/phase15-detection-engineering/) | Phase 15 trigger and validation scripts |
+
+These scripts are used to trigger and validate custom Wazuh detection rules for:
+
+- Encoded PowerShell
+- Account discovery
+- Local group enumeration
+- Scheduled task command activity
+- Failed logon events
+
+---
+
 ## Phase 15 Summary
 
 Phase 15 focused on custom detection engineering with Wazuh.
@@ -153,7 +215,13 @@ Custom rules were created in:
 
 The final custom rules used child-rule logic with `<if_sid>` because Wazuh built-in rules were already matching several events before the original standalone custom rules matched.
 
-### Validated Custom Rules
+Full Phase 15 documentation:
+
+[docs/15-detection-engineering-final-documentation.md](docs/15-detection-engineering-final-documentation.md)
+
+---
+
+## Validated Custom Rules
 
 | Custom Rule ID | Parent Rule ID | Detection | Log Source | MITRE ATT&CK | Status |
 |---:|---:|---|---|---|:---:|
@@ -162,10 +230,6 @@ The final custom rules used child-rule logic with `<if_sid>` because Wazuh built
 | 100202 | 92036 | Local administrators group enumeration | Sysmon Event ID 1 | T1069.001 | ✅ |
 | 100203 | 92032 | Scheduled task command execution using `schtasks` | Sysmon Event ID 1 | T1053.005 | ✅ |
 | 100204 | 60122 | Windows failed logon event | Security Event ID 4625 | T1110 | ✅ |
-
-Phase 15 documentation:
-
-[docs/15-detection-engineering-final-documentation.md](docs/15-detection-engineering-final-documentation.md)
 
 ---
 
@@ -327,7 +391,7 @@ This project demonstrates practical SOC and detection engineering skills, includ
 - Attack simulation and detection validation
 - GitHub-based technical documentation
 - Reusable detection validation script creation
-- PowerShell and Bash scripting for SOC lab validation 
+- PowerShell and Bash scripting for SOC lab validation
 
 ---
 
