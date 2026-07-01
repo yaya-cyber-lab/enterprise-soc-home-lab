@@ -378,7 +378,7 @@ Example:
 
 ## Dashboard Validation
 
-Each custom rule was also validated in Wazuh Dashboard using the following queries:
+Each custom rule was validated in Wazuh Dashboard using the following queries:
 
 ```text
 rule.id:100200
@@ -404,15 +404,45 @@ Last 24 hours
 
 ## Screenshots
 
-The following screenshots were captured for Phase 15 validation:
+The following screenshots were captured to validate the Phase 15 custom detection rules in Wazuh Dashboard.
 
-| Screenshot | Description |
-|---|---|
-| `30-phase15-rule100200-detected.png` | Custom Encoded PowerShell detection |
-| `31-phase15-rule100201-detected.png` | Custom local user enumeration detection |
-| `32-phase15-rule100202-detected.png` | Custom local administrators enumeration detection |
-| `33-phase15-rule100203-detected.png` | Custom scheduled task command detection |
-| `34-phase15-rule100204-detected.png` | Custom failed logon detection |
+### Rule 100200 - Encoded PowerShell Detection
+
+![Phase 15 Rule 100200 Detected](../screenshots/30-phase15-rule100200-detected.png)
+
+This screenshot shows the Wazuh Dashboard alert for custom rule `100200`, which detects encoded PowerShell command execution from Sysmon Event ID 1.
+
+---
+
+### Rule 100201 - Local User Enumeration Detection
+
+![Phase 15 Rule 100201 Detected](../screenshots/31-phase15-rule100201-detected.png)
+
+This screenshot shows the Wazuh Dashboard alert for custom rule `100201`, which detects local user enumeration using the `net user` command.
+
+---
+
+### Rule 100202 - Local Administrators Group Enumeration Detection
+
+![Phase 15 Rule 100202 Detected](../screenshots/32-phase15-rule100202-detected.png)
+
+This screenshot shows the Wazuh Dashboard alert for custom rule `100202`, which detects local administrators group enumeration using the `net localgroup administrators` command.
+
+---
+
+### Rule 100203 - Scheduled Task Command Detection
+
+![Phase 15 Rule 100203 Detected](../screenshots/33-phase15-rule100203-detected.png)
+
+This screenshot shows the Wazuh Dashboard alert for custom rule `100203`, which detects scheduled task command execution using `schtasks`.
+
+---
+
+### Rule 100204 - Windows Failed Logon Detection
+
+![Phase 15 Rule 100204 Detected](../screenshots/34-phase15-rule100204-detected.png)
+
+This screenshot shows the Wazuh Dashboard alert for custom rule `100204`, which detects Windows failed logon events from Security Event ID 4625.
 
 ---
 
