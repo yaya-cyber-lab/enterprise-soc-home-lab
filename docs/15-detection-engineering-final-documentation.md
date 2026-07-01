@@ -163,9 +163,55 @@ The final custom rules used child-rule logic with `<if_sid>` because several eve
 
 ---
 
+## Detection Validation Scripts
+
+The Phase 15 detection tests were organized into reusable scripts so the validation workflow can be repeated consistently.
+
+Script folder:
+
+```text
+../scripts/phase15-detection-engineering/
+```
+
+PowerShell scripts are executed on the Windows endpoint:
+
+```text
+SOC-Windows11-01
+```
+
+The Bash validation script is executed on the Wazuh Server:
+
+```text
+SOC-Ubuntu-Server-01
+```
+
+| Script | Run On | Purpose | Rule ID |
+|---|---|---|---:|
+| [`trigger-encoded-powershell.ps1`](../scripts/phase15-detection-engineering/trigger-encoded-powershell.ps1) | SOC-Windows11-01 | Trigger encoded PowerShell detection | 100200 |
+| [`trigger-net-user.ps1`](../scripts/phase15-detection-engineering/trigger-net-user.ps1) | SOC-Windows11-01 | Trigger local user enumeration detection | 100201 |
+| [`trigger-net-localgroup-admins.ps1`](../scripts/phase15-detection-engineering/trigger-net-localgroup-admins.ps1) | SOC-Windows11-01 | Trigger local administrators group enumeration detection | 100202 |
+| [`trigger-schtasks.ps1`](../scripts/phase15-detection-engineering/trigger-schtasks.ps1) | SOC-Windows11-01 | Trigger scheduled task command detection | 100203 |
+| [`trigger-failed-logon.ps1`](../scripts/phase15-detection-engineering/trigger-failed-logon.ps1) | SOC-Windows11-01 | Trigger Windows failed logon detection | 100204 |
+| [`wazuh-alert-validation-queries.sh`](../scripts/phase15-detection-engineering/wazuh-alert-validation-queries.sh) | SOC-Ubuntu-Server-01 | Validate Phase 15 Wazuh alerts from `alerts.json` | 100200-100204 |
+
+Related script documentation:
+
+- [`scripts/README.md`](../scripts/README.md)
+- [`scripts/phase15-detection-engineering/README.md`](../scripts/phase15-detection-engineering/README.md)
+
+These scripts are for controlled lab testing and detection validation only.
+
+---
+
 ## Rule Validation Commands
 
+The following commands show the manual validation process. Equivalent reusable scripts are stored in [`scripts/phase15-detection-engineering/`](../scripts/phase15-detection-engineering/).
+
 ### Rule 100200 - Encoded PowerShell
+
+Reusable script:
+
+[`trigger-encoded-powershell.ps1`](../scripts/phase15-detection-engineering/trigger-encoded-powershell.ps1)
 
 Command executed on `SOC-Windows11-01`:
 
@@ -200,6 +246,10 @@ Rule ID 100200 triggered successfully.
 
 ### Rule 100201 - Local User Enumeration
 
+Reusable script:
+
+[`trigger-net-user.ps1`](../scripts/phase15-detection-engineering/trigger-net-user.ps1)
+
 Command executed on `SOC-Windows11-01`:
 
 ```powershell
@@ -232,6 +282,10 @@ Rule ID 100201 triggered successfully.
 ---
 
 ### Rule 100202 - Local Administrators Group Enumeration
+
+Reusable script:
+
+[`trigger-net-localgroup-admins.ps1`](../scripts/phase15-detection-engineering/trigger-net-localgroup-admins.ps1)
 
 Command executed on `SOC-Windows11-01`:
 
@@ -266,6 +320,10 @@ Rule ID 100202 triggered successfully.
 
 ### Rule 100203 - Scheduled Task Command Execution
 
+Reusable script:
+
+[`trigger-schtasks.ps1`](../scripts/phase15-detection-engineering/trigger-schtasks.ps1)
+
 Command executed on `SOC-Windows11-01`:
 
 ```powershell
@@ -298,6 +356,10 @@ Rule ID 100203 triggered successfully.
 ---
 
 ### Rule 100204 - Windows Failed Logon
+
+Reusable script:
+
+[`trigger-failed-logon.ps1`](../scripts/phase15-detection-engineering/trigger-failed-logon.ps1)
 
 Command executed on `SOC-Windows11-01`:
 
@@ -339,6 +401,32 @@ Result:
 
 ```text
 Rule ID 100204 triggered successfully.
+```
+
+---
+
+## Script-Based Alert Validation
+
+After running the PowerShell trigger scripts, all Phase 15 alerts can be checked from the Wazuh Server using the reusable Bash validation script:
+
+[`wazuh-alert-validation-queries.sh`](../scripts/phase15-detection-engineering/wazuh-alert-validation-queries.sh)
+
+Example usage on `SOC-Ubuntu-Server-01`:
+
+```bash
+cd scripts/phase15-detection-engineering
+chmod +x wazuh-alert-validation-queries.sh
+./wazuh-alert-validation-queries.sh
+```
+
+The script checks the following custom Wazuh rule IDs:
+
+```text
+100200
+100201
+100202
+100203
+100204
 ```
 
 ---
@@ -472,6 +560,8 @@ This phase demonstrated the following SOC and detection engineering skills:
 - PCRE2 command-line matching
 - MITRE ATT&CK mapping
 - Alert validation using CLI and Dashboard
+- Reusable detection validation script creation
+- PowerShell and Bash scripting for SOC lab validation
 - Detection troubleshooting
 - SIEM rule tuning and verification
 
@@ -482,5 +572,7 @@ This phase demonstrated the following SOC and detection engineering skills:
 Phase 15 was completed successfully.
 
 The Enterprise SOC Home Lab now includes validated custom detection engineering content for Windows endpoint activity, including PowerShell abuse, account discovery, group enumeration, scheduled task execution, and failed logon detection.
+
+The Phase 15 validation workflow is also supported by reusable PowerShell and Bash scripts stored in `scripts/phase15-detection-engineering/`.
 
 This completes the detection engineering and final validation phase of the SOC home lab project.
