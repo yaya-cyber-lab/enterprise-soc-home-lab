@@ -315,6 +315,8 @@ This project demonstrates practical SOC and detection engineering skills, includ
 - Alert validation using CLI and `jq`
 - Attack simulation and detection validation
 - GitHub-based technical documentation
+- Reusable detection validation script creation
+- PowerShell and Bash scripting for SOC lab validation 
 
 ---
 
