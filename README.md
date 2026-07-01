@@ -70,6 +70,17 @@ The lab now includes:
 
 ---
 
+## Scripts
+
+Reusable detection validation scripts are stored in the `scripts/` folder.
+
+[View Scripts](scripts/)
+
+Phase 15 detection engineering scripts:
+
+[Phase 15 Detection Engineering Scripts](scripts/phase15-detection-engineering/)
+
+These scripts are used to trigger and validate custom Wazuh detection rules for encoded PowerShell, account discovery, local group enumeration, scheduled task activity, and failed logon events.
 ## Repository Structure
 
 ```text
