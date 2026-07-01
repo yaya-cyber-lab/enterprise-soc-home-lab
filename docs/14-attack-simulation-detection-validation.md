@@ -511,13 +511,7 @@ Final validation screenshot:
 29-phase14-failed-logon-alert-detected.png
 ```
 
-The project can now document that Wazuh is collecting endpoint telemetry and detecting simulated suspicious activity.
 
-Recommended README update:
-
-```markdown
-| Attack Simulation and Detection Validation | ✅ Completed |
-```
 
 Next recommended phase:
 
